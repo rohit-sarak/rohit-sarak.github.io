@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stream Line</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+  <style>
+    :root {
+      --bg-color: #f9f9f9; --text-color: #000; --header-bg: #fff;
+      --btn-bg: #ff0000; --btn-hover: #cc0000;
+    }
+    body.dark {
+      --bg-color: #181818; --text-color: #fff; --header-bg: #202020;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+    body { background: var(--bg-color); color: var(--text-color); }
+    header {
+      background: var(--header-bg); padding: 10px 20px; display: flex;
+      align-items: center; justify-content: space-between; box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      position: sticky; top: 0; z-index: 1000;
+    }
+    .logo {
+      font-size: 24px; color: red; font-weight: bold; display: flex; align-items: center; gap: 10px;
+    }
+    header input {
+      padding: 8px; width: 60%; border-radius: 20px; border: 1px solid #ccc;
+    }
+    header input:focus {
+      width: 80%;
+    }
+    .sidebar {
+      width: 200px; background: var(--header-bg); height: 100vh; position: fixed;
+      top: 60px; left: 0; padding: 10px; border-right: 1px solid #ddd;
+    }
+    .sidebar a {
+      display: flex; align-items: center; padding: 10px; color: var(--text-color);
+      text-decoration: none; cursor: pointer; border-radius: 8px;
+    }
+    .sidebar a:hover { background: rgba(0,0,0,0.1); }
+    .sidebar a i { margin-right: 15px; width: 24px; text-align: center; }
+    .main { margin-left: 220px; padding: 20px; }
+    .video {
+      width: calc(25% - 20px); margin-bottom: 30px; position: relative;
+    }
+    .video-container {
+      position: relative; width: 100%; aspect-ratio: 16 / 9;
+    }
+    .embedded-container iframe {
+      width: 100%; height: 100%; border-radius: 6px;
+    }
+    .video-thumbnail {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 6px;
+      transition: filter 0.3s ease, box-shadow 0.3s ease;
+    }
+    .video-thumbnail:hover {
+      filter: brightness(0.95);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .video h4 {
+      margin-top: 5px; font-size: 16px;
+    }
+    .video-grid {
+      display: flex; flex-wrap: wrap; gap: 20px;
+    }
+    @media (max-width: 1200px) {
+      .video { width: calc(33.33% - 20px); }
+    }
+    @media (max-width: 900px) {
+      .video { width: calc(50% - 20px); }
+    }
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      header input { width: 60%; }
+      .video { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="public/Logo.png" alt="Logo" style="height: 40px;" />
+      <div class="logo">Stream Line</div>
+    </div>
+    <div>
+      <input type="text" placeholder="Search" oninput="filterVideos(this.value)" />
+      <button onclick="toggleDarkMode()" style="margin-left: 10px; background: #000; color: #fff; border: none; padding: 6px 10px; border-radius: 4px;">🌙</button>
+    </div>
+  </header>
+  <div class="sidebar">
+    <a onclick="showVideos('home')"><i class="fas fa-home"></i> Home</a>
+    <a onclick="showVideos('trending')"><i class="fas fa-fire"></i> Trending</a>
+  </div>
+  <div class="main">
+    <div class="video-grid" id="videoGrid"></div>
+  </div>
+
+  <script>
+    const videos = [
+      {
+        id: 'bunny1',
+        title: 'Bunny Streamed Video 1',
+        embedUrl: 'https://iframe.mediadelivery.net/embed/YOUR_STREAM_ID_1?autoplay=true '
+      },
+      {
+        id: 'bunny2',
+        title: 'Bunny Streamed Video 2',
+        embedUrl: 'https://iframe.mediadelivery.net/embed/YOUR_STREAM_ID_2?autoplay=true '
+      },
+      {
+        id: 'bunny3',
+        title: 'Bunny Streamed Video 3',
+        embedUrl: 'https://iframe.mediadelivery.net/embed/YOUR_STREAM_ID_3?autoplay=true '
+      },
+      {
+        id: 'bunny4',
+        title: 'Bunny Streamed Video 4',
+        embedUrl: 'https://iframe.mediadelivery.net/embed/YOUR_STREAM_ID_4?autoplay=true '
+      }
+    ];
+
+    function renderVideos(filtered = videos) {
+      document.getElementById('videoGrid').innerHTML = filtered.map(v => `
+        <div class="video">
+          <div class="video-container">
+            <div class="embedded-container">
+              <iframe allow="autoplay; fullscreen; encrypted-media;" src="${v.embedUrl}" onclick="playInFullscreen('${v.id}')"></iframe>
+            </div>
+          </div>
+          <h4>${v.title}</h4>
+        </div>
+      `).join('');
+    }
+
+    function showVideos(type) {
+      if (type === 'trending') {
+        const shuffled = [...videos].sort(() => 0.5 - Math.random()).slice(0, 4);
+        renderVideos(shuffled);
+      } else {
+        renderVideos();
+      }
+    }
+
+    function filterVideos(query) {
+      const filtered = videos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()));
+      renderVideos(filtered);
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+    }
+
+    function playInFullscreen(id) {
+      const iframe = document.querySelector(`#videoGrid iframe[src*="${id}"]`);
+      if (!iframe) return;
+
+      iframe.requestFullscreen().then(() => {
+        iframe.play().catch(e => console.log("Auto-play prevented:", e));
+      });
+    }
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      const iframe = document.querySelector('iframe[allowfullscreen]:focus');
+      if (!iframe) return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        iframe.paused ? iframe.play() : iframe.pause();
+      }
+
+      if (e.code === 'KeyF') {
+        e.preventDefault();
+        if (!document.fullscreenElement) {
+          iframe.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    });
+
+    // Initialize
+    showVideos('home');
+  </script>
+</body>
+</html>
