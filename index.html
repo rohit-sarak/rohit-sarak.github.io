@@ -1,188 +1,716 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Stream Line</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
-  <style>
-    :root {
-      --bg-color: #f9f9f9; --text-color: #000; --header-bg: #fff;
-      --btn-bg: #ff0000; --btn-hover: #cc0000;
-    }
-    body.dark {
-      --bg-color: #181818; --text-color: #fff; --header-bg: #202020;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-    body { background: var(--bg-color); color: var(--text-color); }
-    header {
-      background: var(--header-bg); padding: 10px 20px; display: flex;
-      align-items: center; justify-content: space-between; box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-      position: sticky; top: 0; z-index: 1000;
-    }
-    .logo {
-      font-size: 25px; color: purple; font-weight: bold; display: flex; align-items: center; gap: 10px;
-    }
-    header input {
-      padding: 8px; width: 60%; border-radius: 20px; border: 1px solid #ccc;
-    }
-    header input:focus {
-      width: 80%;
-    }
-    .sidebar {
-      width: 200px; background: var(--header-bg); height: 100vh; position: fixed;
-      top: 60px; left: 0; padding: 10px; border-right: 1px solid #ddd;
-    }
-    .sidebar a {
-      display: flex; align-items: center; padding: 10px; color: var(--text-color);
-      text-decoration: none; cursor: pointer; border-radius: 8px;
-    }
-    .sidebar a:hover { background: rgba(0,0,0,0.1); }
-    .sidebar a i { margin-right: 15px; width: 24px; text-align: center; }
-    .main { margin-left: 220px; padding: 20px; }
-    .video {
-      width: calc(25% - 20px); margin-bottom: 30px; position: relative;
-    }
-    .video-container {
-      position: relative; width: 100%; aspect-ratio: 16 / 9;
-    }
-    .embedded-container iframe {
-      width: 100%; height: 100%; border-radius: 6px;
-    }
-    .video-thumbnail {
-      width: 100%; height: 100%; object-fit: cover; border-radius: 6px;
-      transition: filter 0.3s ease, box-shadow 0.3s ease;
-    }
-    .video-thumbnail:hover {
-      filter: brightness(0.95);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-    .video h4 {
-      margin-top: 5px; font-size: 16px;
-    }
-    .video-grid {
-      display: flex; flex-wrap: wrap; gap: 20px;
-    }
-    @media (max-width: 1200px) {
-      .video { width: calc(33.33% - 20px); }
-    }
-    @media (max-width: 900px) {
-      .video { width: calc(50% - 20px); }
-    }
-    @media (max-width: 768px) {
-      .sidebar { display: none; }
-      .main { margin-left: 0; }
-      header input { width: 60%; }
-      .video { width: 100%; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteBasket - Premium Sneakers & Streetwear</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #ff0000;
+            --gray-light: #f8f8f8;
+            --gray: #e0e0e0;
+            --gray-dark: #333333;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--primary);
+            background-color: var(--secondary);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: var(--secondary);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .header-actions a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .header-actions a:hover {
+            color: var(--accent);
+        }
+        
+        .cart-icon {
+            position: relative;
+            font-size: 20px;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: var(--secondary);
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://placehold.co/1920x1080') no-repeat center center/cover;
+        }
+        
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--secondary);
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 60px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--secondary);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 2px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+        }
+        
+        /* Featured Products */
+        .featured {
+            padding: 100px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .section-header p {
+            color: var(--gray-dark);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product {
+            background-color: var(--secondary);
+            border: 1px solid var(--gray);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+        
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-img {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .product:hover .product-img img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-category {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-dark);
+            margin-bottom: 8px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        /* Categories */
+        .categories {
+            padding: 100px 0;
+            background-color: var(--gray-light);
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .category-card {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .category-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: var(--secondary);
+        }
+        
+        .category-content h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .category-content p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        /* New Arrivals */
+        .new-arrivals {
+            padding: 100px 0;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            padding: 100px 0;
+            background-color: var(--primary);
+            color: var(--secondary);
+            text-align: center;
+        }
+        
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .newsletter p {
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--accent);
+            color: var(--secondary);
+            border: none;
+            padding: 0 30px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #cc0000;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--gray-dark);
+            color: var(--secondary);
+            padding: 80px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column ul li a {
+            color: var(--secondary);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column ul li a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 50px;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .section-header h2 {
+                font-size: 30px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                margin-bottom: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <img src="public/Logo.png" alt="Logo" style="height: 40px;" />
-      <div class="logo">Stream Line</div>
-    </div>
-    <div>
-      <input type="text" placeholder="Search" oninput="filterVideos(this.value)" />
-      <button onclick="toggleDarkMode()" style="margin-left: 10px; background: #000; color: #fff; border: none; padding: 6px 10px; border-radius: 4px;">🌙</button>
-    </div>
-  </header>
-  <div class="sidebar">
-    <a onclick="showVideos('home')"><i class="fas fa-home"></i> Home</a>
-    <a onclick="showVideos('trending')"><i class="fas fa-fire"></i> Trending</a>
-    <a href="mailto:starmovies071@gmail.com?subject=Customer Inquiry&body=Hello, I would like to ask..." class="contact-button"><i class="fas fa-envelope"></i> Contact Us</a>
-  </div>
-  <div class="main">
-    <div class="video-grid" id="videoGrid"></div>
-  </div>
-
-  <script>
-    const videos = [
-      {
-        id: '1',
-        title: 'Tamilnadu',
-        embedUrl: 'https://iframe.mediadelivery.net/embed/429490/744e11a7-4f51-449c-83a8-e7d8c6e49561?autoplay=false '
-      },
-      {
-        id: '2',
-        title: 'Dhoom 3 (2013) Hind 1080p',
-        embedUrl: 'https://iframe.mediadelivery.net/embed/429490/9e45b0d2-4509-46c9-83ce-9c33475f8570?autoplay=false '
-      },
-      {
-        id: '4',
-        title: 'Sea Beauty',
-        embedUrl: 'https://iframe.mediadelivery.net/embed/429490/9d8c707d-d3fa-4922-a14c-afd07956d0bc?autoplay=false '
-      },
-      {
-        id: '3',
-        title: 'Raid 2 (2025) Hindi 1080p',
-        embedUrl: 'https://iframe.mediadelivery.net/embed/429490/24e592d4-9a49-4bc9-861a-f37e2478b922?autoplay=false '
-      }
-    ];
-
-    function renderVideos(filtered = videos) {
-      document.getElementById('videoGrid').innerHTML = filtered.map(v => `
-        <div class="video">
-          <div class="video-container">
-            <div class="embedded-container">
-              <iframe allow="autoplay; fullscreen; encrypted-media;" src="${v.embedUrl}" onclick="playInFullscreen('${v.id}')"></iframe>
+    <header>
+        <div class="container header-container">
+            <div class="logo">ELITE<span>BASKET</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Sneakers</a></li>
+                    <li><a href="#">Apparel</a></li>
+                    <li><a href="#">Accessories</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="#" aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Account">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 1h-1v1h1v3h1v1h-1v1h-2v-6h-1v-1h3V8z"/>
+                    </svg>
+                </a>
+                <a href="#" class="cart-icon" aria-label="Cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H15V15a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V1.5zm13.89 1a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v1h11.89l-.4-1zM5 5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5zm4 10V9h2v6H9zm-4 0V9h2v6H5z"/>
+                    </svg>
+                    <span class="cart-count">3</span>
+                </a>
             </div>
-          </div>
-          <h4>${v.title}</h4>
         </div>
-      `).join('');
-    }
+    </header>
 
-    function showVideos(type) {
-      if (type === 'trending') {
-        const shuffled = [...videos].sort(() => 0.5 - Math.random()).slice(0, 4);
-        renderVideos(shuffled);
-      } else {
-        renderVideos();
-      }
-    }
+    <section class="hero">
+        <div class="hero-content">
+            <h1>STEP INTO ELITE STYLE</h1>
+            <p>Premium sneakers and streetwear for those who demand the best. Limited editions, exclusive releases, and timeless classics.</p>
+            <a href="#" class="btn">Shop Now</a>
+        </div>
+    </section>
 
-    function filterVideos(query) {
-      const filtered = videos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()));
-      renderVideos(filtered);
-    }
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Products</h2>
+                <p>Discover our curated selection of the finest sneakers and apparel from top brands around the world.</p>
+            </div>
+            <div class="products">
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://placehold.co/300x300" alt="Nike Air Jordan 1">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sneakers</div>
+                        <h3 class="product-title">Nike Air Jordan 1 Retro High</h3>
+                        <div class="product-price">$190.00</div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://placehold.co/300x300" alt="Adidas Yeezy 350">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sneakers</div>
+                        <h3 class="product-title">Adidas Yeezy Boost 350 V2</h3>
+                        <div class="product-price">$220.00</div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://placehold.co/300x300" alt="Nike SB Dunk">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sneakers</div>
+                        <h3 class="product-title">Nike SB Dunk Low Travis Scott</h3>
+                        <div class="product-price">$350.00</div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://placehold.co/300x300" alt="Champion Hoodie">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Apparel</div>
+                        <h3 class="product-title">Champion Reverse Weave Hoodie</h3>
+                        <div class="product-price">$85.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark');
-    }
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Shop By Category</h2>
+                <p>Explore our extensive collection organized by category for easy browsing.</p>
+            </div>
+            <div class="category-grid">
+                <div class="category-card">
+                    <img src="https://placehold.co/600x300" alt="Sneakers">
+                    <div class="category-content">
+                        <h3>Sneakers</h3>
+                        <p>Latest releases and classic styles</p>
+                        <a href="#" class="btn">Explore</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="https://placehold.co/600x300" alt="Apparel">
+                    <div class="category-content">
+                        <h3>Apparel</h3>
+                        <p>Streetwear and athletic clothing</p>
+                        <a href="#" class="btn">Explore</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="https://placehold.co/600x300" alt="Accessories">
+                    <div class="category-content">
+                        <h3>Accessories</h3>
+                        <p>Hats, bags, and lifestyle products</p>
+                        <a href="#" class="btn">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    function playInFullscreen(id) {
-      const iframe = document.querySelector(`#videoGrid iframe[src*="${id}"]`);
-      if (!iframe) return;
+    <section class="new-arrivals">
+        <div class="container">
+            <div class="section-header">
+                <h2>New Arrivals</h2>
+                <p>Be the first to shop our latest exclusive releases and limited editions.</p>
+            </div>
+            <div class="products">
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://placehold.co/300x300" alt="Nike Dunk Low">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sneakers</div>
+                        <h3 class="product-title">Nike Dunk Low Retro</h3>
+                        <div class="product-price">$120.00</div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://placehold.co/300x300" alt="Adidas Forum">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sneakers</div>
+                        <h3 class="product-title">Adidas Forum Low</h3>
+                        <div class="product-price">$110.00</div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://placehold.co/300x300" alt="Stüssy T-Shirt">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Apparel</div>
+                        <h3 class="product-title">Stüssy Script Logo T-Shirt</h3>
+                        <div class="product-price">$45.00</div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <img src="https://placehold.co/300x300" alt="New Balance">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sneakers</div>
+                        <h3 class="product-title">New Balance 550 White</h3>
+                        <div class="product-price">$115.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      iframe.requestFullscreen().then(() => {
-        iframe.play().catch(e => console.log("Auto-play prevented:", e));
-      });
-    }
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Join Our Newsletter</h2>
+                <p>Subscribe to be the first to know about new arrivals, exclusive releases, and special offers.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-    // Keyboard Shortcuts
-    document.addEventListener('keydown', (e) => {
-      const iframe = document.querySelector('iframe[allowfullscreen]:focus');
-      if (!iframe) return;
-
-      if (e.code === 'Space') {
-        e.preventDefault();
-        iframe.paused ? iframe.play() : iframe.pause();
-      }
-
-      if (e.code === 'KeyF') {
-        e.preventDefault();
-        if (!document.fullscreenElement) {
-          iframe.requestFullscreen();
-        } else {
-          document.exitFullscreen();
-        }
-      }
-    });
-
-    // Initialize
-    showVideos('home');
-  </script>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EliteBasket</h3>
+                    <p>Premium sneakers and streetwear for those who demand the best. Limited editions, exclusive releases, and timeless classics.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="#">Sneakers</a></li>
+                        <li><a href="#">Apparel</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>support@elitebasket.shop</li>
+                        <li>+1 (555) 123-4567</li>
+                        <li>123 Fashion Street, New York, NY 10001</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 EliteBasket. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
